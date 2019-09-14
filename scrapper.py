@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import json
 import re
+import pandas as pd
 
 query="web developer"
 def indeedParser(q):
@@ -68,5 +69,10 @@ def stackOverflowParser(q):
 """ print(stackOverflowParser(query))
 print(indeedParser(query))
  """
-with open("json.json","w") as jsonData:
-    jsonData.write(stackOverflowParser(query))
+""" with open("json.json","w") as jsonData:
+    jsonData.write(stackOverflowParser(query)) """
+dfStack =pd.read_json(stackOverflowParser(query))
+dfIndeed =pd.read_json(indeedParser(query))
+df=dfStack.append(dfIndeed)
+""" df.to_excel("jobs.xls") """
+df.to_csv("jobs.csv")
